@@ -6,18 +6,12 @@ from time import strftime
 from lib import version as ver
 from lib import colors
 from lib.action_description import action_description as act_desc
-from lib.common_functions import check_num,exit_on_error,joinpath,probetest,test_path,copy_to_remote
+from lib.common_functions import joinpath,test_path,copy_to_remote
 from config.configuration import out_dir_dict
 
 
 start_time= strftime('%H%M%S')
-version_number = (0, 0, 0)
-
-#out_dir_path='.'
-#output_path=out_dir_path
-
-#base_outdir='.'
-#extension=''
+version_number = (0, 0, 1)
 
 #########   Command line interaction for user supplied variables   #########
 # provide description and version info
@@ -35,28 +29,17 @@ parser.add_argument('-opt','--option', help='''Custom display options, options m
 parser.add_argument('-v','--version', action='version', version='%(prog)s {}'.format(ver.ver_info(version_number)), help='show the version number and exit')
 args = parser.parse_args()
 
-#action=args.action_command.lower()
 output_filename=str(args.filename)
 output_path=args.output_path
 
 enabled_local_copy=args.local_copy
 enabled_remote_copy=args.remote_copy
 
-#TEST=args.check_file
-
 if not (args.option == None):
     OPT_TEST=args.option.lower()
 else:
     OPT_TEST=''
     
-#if enabled_local_copy:
-    ##output_filename_ext=joinpath(base_outdir,output_file+'.'+extension)
-    #output_filename_ext=joinpath(base_outdir,output_file)
-    ##colors.print_red(output_filename_ext)
-#else:
-    ##output_filename_ext=output_file+'.'+extension
-    #output_filename_ext=output_file
-
 colors.print_blue("Copying...")
 
 ########   Copying file to destination   ########
