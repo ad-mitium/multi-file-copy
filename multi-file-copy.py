@@ -19,11 +19,8 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, 
 , 
 epilog=act_desc['epi']
  )
-#parser.add_argument('action_command', help='''Enter action option. See all actions below.''')
 parser.add_argument('filename', help='''Enter input file name to copy''')
 parser.add_argument('output_path', help='''Enter output directory path to copy to''')
-#parser.add_argument('-c','--check-file', action='store_true',help='''Probe file for information''') 
-parser.add_argument('-lc','--local-copy', action='store_false',help='''Disable copying to local folder''') 
 parser.add_argument('-rc','--remote-copy', action='store_false',help='''Disable copying to remote folder''') 
 parser.add_argument('-opt','--option', help='''Custom display options, options must be wrapped in apostrophes (-opt 'options') ''') 
 parser.add_argument('-v','--version', action='version', version='%(prog)s {}'.format(ver.ver_info(version_number)), help='show the version number and exit')
@@ -32,7 +29,6 @@ args = parser.parse_args()
 output_filename=str(args.filename)
 output_path=args.output_path
 
-enabled_local_copy=args.local_copy
 enabled_remote_copy=args.remote_copy
 
 if not (args.option == None):
@@ -43,10 +39,11 @@ else:
 colors.print_blue("Copying...")
 
 ########   Copying file to destination   ########
-#colors.print_blue("Copying files to remote location.\r")
 for out_dir_name, out_dir_path in out_dir_dict.items():
-    #print (out_dir_name)
-    #print (out_dir_path)
+    if OPT_TEST == 'verbose':
+        # print (out_dir_name)
+        # print (out_dir_path)
+        pass
     full_out_path=joinpath(out_dir_path,output_path)
     test_path(full_out_path,enabled_remote_copy)
     copy_to_remote(out_dir_name,full_out_path,out_dir_path,output_filename,enabled_remote_copy,OPT_TEST)
