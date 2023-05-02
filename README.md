@@ -1,16 +1,16 @@
 # Multiple File Copy
 
-A python script using `shutils` to copy a file to multiple locations.
+A python script using `shutil` to copy a file to multiple locations. It was getting old echoing folders through xargs (even inside a bash script) to copy a file to multiple locations when there are multiple files to copy, each going to different folder names.
 
 It should be obvious, but it has to be put in writing, that you use this at your own risk.
 
 ## Usage
 
-This script uses `shutils` to copy a file to multiple pre-specified locations.
+This script uses `shutil` to copy a file to multiple pre-specified locations.
 
-User configurable options exist to tailor its behavior and destination locations.  All user configurable variables are located in the `config` folder.
+User configurable options exist in `configuration.py` to tailor its behavior and default destination folder locations. All user configurable variables are located in the `config` folder.
 
-Using the `-opt` flag will provide extended.
+Using the `-opt` flag will provide extended information about the copy process.
 
 ### **Code execution as follows:**
 
@@ -31,6 +31,10 @@ Executing
 * TextWrap
 
         pip install textwrap
+
+## **Precautions**
+
+This python script **does not** have a *no-clobber* test. **Make sure the desitination is empty!**
 
 ## To Do
 
