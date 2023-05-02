@@ -57,7 +57,7 @@ def test_path(output_folder_path, copy_status):
 
 def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_status,opt_test):
     if opt_test == 'verbose':
-        print (full_path,output_directory)
+        # print (full_path,output_directory)
         colors.print_cyan_no_cr(location_name)
         print("", end =" ")
     if copy_status:
