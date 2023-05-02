@@ -14,14 +14,14 @@ Using the `-opt` flag will provide extended.
 
 ### **Code execution as follows:**
 
-    python3 multi-file-copy <File> <Destination folder> 
+    python3 multi-file-copy <Destination folder> <File>
 
 ### **Examples:**
 
 Executing
 
-    python3 multi-file-copy filename.ext folder_path
-    python3 multi-file-copy -opt 'verbose' filename.ext folder_path
+    python3 multi-file-copy folder_path filename.ext
+    python3 multi-file-copy -opt 'verbose' folder_path filename.ext
 
 ## Required to use this script *(Aside from Python 3)*
 
