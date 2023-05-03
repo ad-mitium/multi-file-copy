@@ -21,7 +21,7 @@ epilog=act_desc['epi']
  )
 parser.add_argument('output_path', help='''Enter output directory path to copy to''')
 parser.add_argument('filename', help='''Enter input file name to copy''')
-parser.add_argument('-rc','--remote-copy', action='store_false',help='''Disable copying to remote folder''') 
+parser.add_argument('-drc','--remote-copy', action='store_false',help='''Disable copying to remote folder (for debugging)''') 
 parser.add_argument('-opt','--option', help='''Custom display options, options must be wrapped in apostrophes (-opt 'options') ''') 
 parser.add_argument('-v','--version', action='version', version='%(prog)s {}'.format(ver.ver_info(version_number)), help='show the version number and exit')
 args = parser.parse_args()

@@ -10,7 +10,7 @@ This script uses `shutil` to copy a file to multiple pre-specified locations.
 
 User configurable options exist in `configuration.py` to tailor its behavior and default destination folder locations. All user configurable variables are located in the `config` folder.
 
-Using the `-opt` flag will provide extended information about the copy process.
+Using the `-opt` flag will provide extended information about the copy process. `-drc` disables remote copying (for debugging purposes)
 
 ### **Code execution as follows:**
 
