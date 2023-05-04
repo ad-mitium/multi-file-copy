@@ -9,12 +9,13 @@ def joinpath(rootdir, targetdir):
     return os.path.join(os.sep, rootdir + os.sep, targetdir)
 
 def exit_on_error():
-    answer = input("Continue with default options? [y/N]  ").lower()
+    answer = input("Continue with copy and overwrite destination file? [y/N]  ").lower()
     if answer == 'y':
-        print("Continuing with default options")
+        print("Continuing to copy and overwrite destination file")
     else:
-        print("Exiting.")
+        print("Copy aborted. Exiting program.")
         raise SystemExit(0)
+    return True
     
 def check_num(num): # Sanity test for input
     limit=10        # Don't dwell on failure forever
@@ -55,15 +56,29 @@ def test_path(output_folder_path, copy_status):
                 "If copying were enabled, '"+output_folder_path+"' would be created.", 
                 width=defaults['display_wrap_width'], subsequent_indent='               '))
 
-def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_status,opt_test):
-    if opt_test == 'verbose':
+def test_file(filename_to_test):
+    if os.path.exists(filename_to_test):
+        test_status = True
+        colors.print_red(textwrap.fill(text='ERROR:     "'+filename_to_test+'" exists', 
+            width=defaults['display_wrap_width'], subsequent_indent='           '))
+        test_status = not exit_on_error()       # User has accepted overwriting destination
+    else:
+        test_status = False     # File does not exist
+    return (test_status)
+
+def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_status,clobber_test,verbosity=False):
+    if verbosity == 'verbose':
         # print (full_path,output_directory)
         colors.print_cyan_no_cr(location_name)
         print("", end =" ")
     if copy_status:
         test_path(full_path,copy_status)
-        shutil.copy(filename_ext, full_path)
-    if opt_test == 'verbose':
+        if not clobber_test:
+            shutil.copy(filename_ext, full_path)
+        else:   # Check if file exists, exit or copy
+            if not test_file(filename_ext):
+                shutil.copy(filename_ext, full_path)
+    if verbosity == 'verbose':
         colors.print_yellow_no_cr(filename_ext if len(filename_ext)<defaults['filename_wrap_width'] 
             else textwrap.fill(text=filename_ext, width=defaults['filename_wrap_width'], subsequent_indent='               '))
         print('{} copied to'.format('' if copy_status else ' would be'), end =" ")

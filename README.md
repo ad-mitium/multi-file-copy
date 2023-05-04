@@ -10,7 +10,13 @@ This script uses `shutil` to copy a file to multiple pre-specified locations.
 
 User configurable options exist in `configuration.py` to tailor its behavior and default destination folder locations. All user configurable variables are located in the `config` folder.
 
-Using the `-opt` flag will provide extended information about the copy process. `-drc` disables remote copying (for debugging purposes)
+### **Flags**
+
+    -nc     enables overwrite protection (disabled by default)
+    -drc    disables remote copying (for debugging purposes)
+    -opt    when used with "verbose", it will increase the verbosity of copy output
+
+Using the `-opt` flag will provide extended information about the copy process.
 
 ### **Code execution as follows:**
 
@@ -21,6 +27,7 @@ Using the `-opt` flag will provide extended information about the copy process. 
 Executing
 
     python3 multi-file-copy folder_path filename.ext
+    python3 multi-file-copy -nc folder_path filename.ext
     python3 multi-file-copy -opt 'verbose' folder_path filename.ext
 
 ## Required to use this script *(Aside from Python 3)*
@@ -34,9 +41,10 @@ Executing
 
 ## **Precautions**
 
-This python script **does not** have a *no-clobber* test. **Make sure the desitination is empty!**
+This python script has a *no-clobber* test. You must use `-nc` or `--no-clobber` to enable this, it is not enabled by default
 
 ## To Do
 
-* Add no file clobber test (maybe)
+* ~~Add no file clobber test (maybe)~~
+* Progress indication (still deciding how to display this)
 * TBD
