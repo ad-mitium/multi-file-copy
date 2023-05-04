@@ -9,13 +9,21 @@ def joinpath(rootdir, targetdir):
     return os.path.join(os.sep, rootdir + os.sep, targetdir)
 
 def exit_on_error():
+    skip_answer = input("Do you want to skip this destination folder? [y/N]  ").lower()
+    if skip_answer == 'y':
+        # print('Skipping destination folder')
+        skip_status = 'skip'
+        return skip_status
     answer = input("Continue with copy and overwrite destination file? [y/N]  ").lower()
     if answer == 'y':
         print("Continuing to copy and overwrite destination file")
+        # else:   # Continue with overwriting
+            # return True
+        return False
     else:
         print("Copy aborted. Exiting program.")
         raise SystemExit(0)
-    return True
+    # return True
     
 def check_num(num): # Sanity test for input
     limit=10        # Don't dwell on failure forever
@@ -59,9 +67,10 @@ def test_path(output_folder_path, copy_status):
 def test_file(filename_to_test):
     if os.path.exists(filename_to_test):
         test_status = True
-        colors.print_red(textwrap.fill(text='ERROR:     "'+filename_to_test+'" exists', 
-            width=defaults['display_wrap_width'], subsequent_indent='           '))
-        test_status = not exit_on_error()       # User has accepted overwriting destination
+        colors.cprint('\rERROR:     "', 'red', attrs=['bold'],end='')
+        colors.print_yellow_no_cr(filename_to_test)
+        colors.print_red('" exists')
+        test_status = exit_on_error()       # User has accepted overwriting destination
     else:
         test_status = False     # File does not exist
     return (test_status)
@@ -74,7 +83,17 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
     if copy_status:
         test_path(full_path,copy_status)
         if clobber_test:   # Check if file exists, exit or copy over
-            if not test_file(joinpath(full_path,filename_ext)):
+            file_status = test_file(joinpath(full_path,filename_ext))
+            if file_status == 'skip':
+                colors.print_blue_no_cr('Skipping destination folder')
+                colors.print_white(full_path)
+                if verbosity == 'verbose':
+                    # print (full_path,output_directory)
+                    colors.print_cyan_no_cr(location_name)
+                verbosity = ''  # Don't output rest of the sentence, since it was skipped
+                # pass
+            elif file_status == False:
+                # print('Overwriting')
                 shutil.copy(filename_ext, full_path)
         else:       # Copy or overwrite file
             shutil.copy(filename_ext, full_path)

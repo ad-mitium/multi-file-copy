@@ -11,7 +11,7 @@ from config.configuration import out_dir_dict
 
 
 start_time= strftime('%H%M%S')
-version_number = (0, 0, 3)
+version_number = (0, 0, 4)
 
 #########   Command line interaction for user supplied variables   #########
 # provide description and version info
