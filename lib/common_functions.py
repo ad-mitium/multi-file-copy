@@ -73,11 +73,11 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
         print("", end =" ")
     if copy_status:
         test_path(full_path,copy_status)
-        if not clobber_test:
-            shutil.copy(filename_ext, full_path)
-        else:   # Check if file exists, exit or copy
-            if not test_file(filename_ext):
+        if clobber_test:   # Check if file exists, exit or copy over
+            if not test_file(joinpath(full_path,filename_ext)):
                 shutil.copy(filename_ext, full_path)
+        else:       # Copy or overwrite file
+            shutil.copy(filename_ext, full_path)
     if verbosity == 'verbose':
         colors.print_yellow_no_cr(filename_ext if len(filename_ext)<defaults['filename_wrap_width'] 
             else textwrap.fill(text=filename_ext, width=defaults['filename_wrap_width'], subsequent_indent='               '))

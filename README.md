@@ -41,7 +41,8 @@ Executing
 
 ## **Precautions**
 
-This python script has a *no-clobber* test. You must use `-nc` or `--no-clobber` to enable this, it is not enabled by default
+* This python script has a *no-clobber* test. You must use `-nc` or `--no-clobber` to enable this, it is not enabled by default
+* If you choose **not** to overwrite the file, it will exit out of the script, no skipping to the next copy location
 
 ## To Do
 
