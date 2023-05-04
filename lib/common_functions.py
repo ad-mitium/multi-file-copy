@@ -87,12 +87,12 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
             if file_status == 'skip':
                 colors.print_blue_no_cr('Skipping destination folder')
                 colors.print_white(full_path)
-                if verbosity == 'verbose':
-                    # print (full_path,output_directory)
-                    colors.print_cyan_no_cr(location_name)
                 verbosity = ''  # Don't output rest of the sentence, since it was skipped
                 # pass
             elif file_status == False:
+                if verbosity == 'verbose':
+                    # print (full_path,output_directory)
+                    colors.print_cyan_no_cr(location_name)
                 # print('Overwriting')
                 shutil.copy(filename_ext, full_path)
         else:       # Copy or overwrite file
