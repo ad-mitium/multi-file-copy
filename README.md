@@ -44,6 +44,18 @@ Executing
 * This python script has a *no-clobber* test. You must use `-nc` or `--no-clobber` to enable this, it is not enabled by default
 * ~~If you choose **not** to overwrite the file, it will exit out of the script, no skipping to the next copy location~~ Skipping the folder is now an option
 
+## **Preserving local configuration changes**
+
+Preserving your local configuration changes, assuming your are using git to pull the repository:
+
+    1) Change to repository folder
+    2) Enter the following commands:
+       1) git stash push
+       2) git checkout -- config/configurations.py
+       3) git pull
+       4) git stash apply 
+    3) Confirm that the config/configurations.py file remains the same with your favorite editor/text viewer
+
 ## To Do
 
 * ~~Add no file clobber test (maybe)~~
