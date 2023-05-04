@@ -67,9 +67,9 @@ def test_path(output_folder_path, copy_status):
 def test_file(filename_to_test):
     if os.path.exists(filename_to_test):
         test_status = True
-        colors.cprint('\rERROR:     "', 'red', attrs=['bold'],end='')
-        colors.print_yellow_no_cr(filename_to_test)
-        colors.print_red('" exists')
+        colors.cprint('\rERROR:     ', 'red', attrs=['bold'],end='')
+        colors.print_yellow_no_cr('"'+filename_to_test+'"')
+        colors.print_red(' exists')
         test_status = exit_on_error()       # User has accepted overwriting destination
     else:
         test_status = False     # File does not exist
@@ -88,7 +88,7 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
                 colors.print_blue_no_cr('Skipping destination folder:')
                 colors.print_cyan_no_cr(location_name)
                 print("", end =" ")
-                colors.print_white(full_path)
+                colors.print_white_no_cr(full_path)
                 verbosity = ''  # Don't output rest of the sentence, since it was skipped
                 # pass
             elif file_status == False:
@@ -106,7 +106,7 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
         print('{} copied to'.format('' if copy_status else ' would be'), end =" ")
         print('' if len(filename_ext)<defaults['filename_wrap_width'] 
             else '\n           ', end="") # new line becuase the filename was too long
-        colors.print_white(textwrap.fill(text=full_path, width=defaults['foldername_wrap_width'], subsequent_indent='          ') 
+        colors.print_white_no_cr(textwrap.fill(text=full_path, width=defaults['foldername_wrap_width'], subsequent_indent='          ') 
             if len(filename_ext)<defaults['filename_wrap_width'] 
             else textwrap.fill(text=full_path, width=defaults['display_wrap_width'], subsequent_indent='               '))
 

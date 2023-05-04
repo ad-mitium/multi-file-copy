@@ -42,6 +42,7 @@ colors.print_blue("Copying...")
 
 ########   Copying file to destinations   ########
 for out_dir_name, out_dir_path in out_dir_dict.items():
+    copy_start_time= strftime('%H%M%S')
     if OPT_TEST == 'verbose':
         # print (out_dir_name)
         # print (out_dir_path)
@@ -49,6 +50,11 @@ for out_dir_name, out_dir_path in out_dir_dict.items():
     full_out_path=joinpath(out_dir_path,output_path)
     test_path(full_out_path,enabled_remote_copy)
     copy_to_remote(out_dir_name,full_out_path,out_dir_path,output_filename,enabled_remote_copy,clobber_test,OPT_TEST)
+    copy_end_time= strftime('%H%M%S')
+    copy_elapsed_time= int(copy_end_time) - int(copy_start_time)
+    colors.cprint("  Copy time: ", 'green', attrs=['bold'], end =" ")
+    colors.print_yellow(copy_elapsed_time)
+
 
 curr_time=strftime('%H%M%S')
 
