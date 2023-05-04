@@ -85,14 +85,17 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
         if clobber_test:   # Check if file exists, exit or copy over
             file_status = test_file(joinpath(full_path,filename_ext))
             if file_status == 'skip':
-                colors.print_blue_no_cr('Skipping destination folder')
+                colors.print_blue_no_cr('Skipping destination folder:')
+                colors.print_cyan_no_cr(location_name)
+                print("", end =" ")
                 colors.print_white(full_path)
                 verbosity = ''  # Don't output rest of the sentence, since it was skipped
                 # pass
             elif file_status == False:
-                if verbosity == 'verbose':
+                if verbosity == 'verbose':  # Redraw due to being overwritten by error message
                     # print (full_path,output_directory)
                     colors.print_cyan_no_cr(location_name)
+                    print("", end =" ")
                 # print('Overwriting')
                 shutil.copy(filename_ext, full_path)
         else:       # Copy or overwrite file
