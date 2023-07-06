@@ -87,7 +87,7 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
                 try:
                     shutil.copytree(filename_ext, full_path)
                 except FileExistsError:
-                    colors.print_red(f'\nError: Folder exists already.')
+                    colors.print_red(f'\nError: Folder "{filename_ext}" exists already.')
                     exit_on_error()
             else:
                 shutil.copytree(filename_ext, full_path, dirs_exist_ok = True)  # clobber existing folder structure              
