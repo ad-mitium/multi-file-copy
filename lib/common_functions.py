@@ -82,24 +82,34 @@ def copy_to_remote(location_name,full_path,output_directory,filename_ext,copy_st
         print("", end =" ")
     if copy_status:
         test_path(full_path,copy_status)
-        if clobber_test:   # Check if file exists, exit or copy over
-            file_status = test_file(joinpath(full_path,filename_ext))
-            if file_status == 'skip':
-                colors.print_blue_no_cr('Skipping destination folder:')
-                colors.print_cyan_no_cr(location_name)
-                print("", end =" ")
-                colors.print_white_no_cr(full_path)
-                verbosity = ''  # Don't output rest of the sentence, since it was skipped
-                # pass
-            elif file_status == False:
-                if verbosity == 'verbose':  # Redraw due to being overwritten by error message
-                    # print (full_path,output_directory)
+        if os.path.isdir(filename_ext):     # If it is a directory, use copytree
+            if clobber_test:
+                try:
+                    shutil.copytree(filename_ext, full_path)
+                except FileExistsError:
+                    colors.print_red(f'\nError: Folder exists already.')
+                    exit_on_error()
+            else:
+                shutil.copytree(filename_ext, full_path, dirs_exist_ok = True)  # clobber existing folder structure              
+        else:
+            if clobber_test:   # Check if file exists, exit or copy over
+                file_status = test_file(joinpath(full_path,filename_ext))
+                if file_status == 'skip':
+                    colors.print_blue_no_cr('Skipping destination folder:')
                     colors.print_cyan_no_cr(location_name)
                     print("", end =" ")
-                # print('Overwriting')
-                shutil.copy(filename_ext, full_path)
-        else:       # Copy or overwrite file
-            shutil.copy(filename_ext, full_path)
+                    colors.print_white_no_cr(full_path)
+                    verbosity = ''  # Don't output rest of the sentence, since it was skipped
+                    # pass
+                elif file_status == False:
+                    if verbosity == 'verbose':  # Redraw due to being overwritten by error message
+                        # print (full_path,output_directory)
+                        colors.print_cyan_no_cr(location_name)
+                        print("", end =" ")
+                    # print('Overwriting')
+                    shutil.copy2(filename_ext, full_path)
+            else:       # Copy or overwrite file
+                shutil.copy2(filename_ext, full_path)
     if verbosity == 'verbose':
         colors.print_yellow_no_cr(filename_ext if len(filename_ext)<defaults['filename_wrap_width'] 
             else textwrap.fill(text=filename_ext, width=defaults['filename_wrap_width'], subsequent_indent='               '))
